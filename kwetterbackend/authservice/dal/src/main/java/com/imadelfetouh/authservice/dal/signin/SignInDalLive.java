@@ -1,0 +1,20 @@
+package com.imadelfetouh.authservice.dal.signin;
+
+import com.imadelfetouh.authservice.dal.configuration.Executer;
+import com.imadelfetouh.authservice.dal.queryexecuter.SignInExecuter;
+import com.imadelfetouh.authservice.dalinterface.SignInDal;
+import com.imadelfetouh.authservice.model.response.ResponseModel;
+
+public class SignInDalLive implements SignInDal {
+
+    private Executer<Boolean> executer;
+
+    public SignInDalLive() {
+        executer = new Executer<>();
+    }
+
+    @Override
+    public ResponseModel<Boolean> signIn(String username, String password) {
+        return executer.execute(new SignInExecuter(username, password));
+    }
+}

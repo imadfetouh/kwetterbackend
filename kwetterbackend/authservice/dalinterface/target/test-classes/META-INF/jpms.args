@@ -1,0 +1,4 @@
+--patch-module
+dalinterface=_
+--add-reads
+dalinterface=ALL-UNNAMED

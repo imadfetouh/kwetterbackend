@@ -3,6 +3,13 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/authservice/authservice.iml" filepath="$PROJECT_DIR$/authservice/authservice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authservice/dal/dal.iml" filepath="$PROJECT_DIR$/authservice/dal/dal.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authservice/dalinterface/dalinterface.iml" filepath="$PROJECT_DIR$/authservice/dalinterface/dalinterface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authservice/factory/factory.iml" filepath="$PROJECT_DIR$/authservice/factory/factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authservice/logic/logic.iml" filepath="$PROJECT_DIR$/authservice/logic/logic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authservice/logicinterface/logicinterface.iml" filepath="$PROJECT_DIR$/authservice/logicinterface/logicinterface.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authservice/model/model.iml" filepath="$PROJECT_DIR$/authservice/model/model.iml" />
+      <module fileurl="file://$PROJECT_DIR$/authservice/rest/rest.iml" filepath="$PROJECT_DIR$/authservice/rest/rest.iml" />
       <module fileurl="file://$PROJECT_DIR$/zuulproxyservice/zuulproxyservice.iml" filepath="$PROJECT_DIR$/zuulproxyservice/zuulproxyservice.iml" />
     </modules>
   </component>

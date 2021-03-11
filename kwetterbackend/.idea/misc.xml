@@ -8,6 +8,7 @@
       <list>
         <option value="$PROJECT_DIR$/zuulproxyservice/pom.xml" />
         <option value="$PROJECT_DIR$/authservice/pom.xml" />
+        <option value="$PROJECT_DIR$/authservice/rest/pom.xml" />
       </list>
     </option>
   </component>

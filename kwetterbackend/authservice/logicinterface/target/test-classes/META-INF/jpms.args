@@ -1,0 +1,4 @@
+--patch-module
+logicinterface=_
+--add-reads
+logicinterface=ALL-UNNAMED

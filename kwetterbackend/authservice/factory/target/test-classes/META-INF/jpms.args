@@ -1,0 +1,4 @@
+--patch-module
+factory=_
+--add-reads
+factory=ALL-UNNAMED

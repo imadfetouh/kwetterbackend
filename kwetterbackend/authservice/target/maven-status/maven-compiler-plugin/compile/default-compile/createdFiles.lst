@@ -1,5 +1,0 @@
-com\imadelfetouh\authservice\applicationpath\AuthServicePath.class
-com\imadelfetouh\authservice\environment\Environment.class
-com\imadelfetouh\authservice\rabbit\RabbitConnection.class
-com\imadelfetouh\authservice\endpoint\SignInResource.class
-com\imadelfetouh\authservice\environment\EnvironmentType.class

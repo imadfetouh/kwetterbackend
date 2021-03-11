@@ -1,0 +1,3 @@
+module-info.class
+com\imadelfetouh\authservice\rest\applicationpath\AuthServiceRest.class
+com\imadelfetouh\authservice\rest\endpoints\SignInResource.class

@@ -1,0 +1,4 @@
+com\imadelfetouh\authservice\factory\Factory.class
+com\imadelfetouh\authservice\factory\CreateInstance.class
+module-info.class
+com\imadelfetouh\authservice\factory\CreateLogicLiveInstance.class
