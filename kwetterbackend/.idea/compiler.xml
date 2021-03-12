@@ -21,6 +21,7 @@
       <module name="dal" target="11" />
       <module name="dalinterface" target="11" />
       <module name="factory" target="11" />
+      <module name="jwtservice" target="11" />
       <module name="logic" target="11" />
       <module name="logicinterface" target="11" />
       <module name="model" target="11" />

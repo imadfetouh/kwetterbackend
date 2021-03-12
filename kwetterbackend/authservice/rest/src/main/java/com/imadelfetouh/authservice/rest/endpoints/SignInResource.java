@@ -1,9 +1,10 @@
 package com.imadelfetouh.authservice.rest.endpoints;
 
-import com.imadelfetouh.authservice.factory.CreateLogicLiveInstance;
+import com.imadelfetouh.authservice.factory.logicinstance.CreateLogicLiveInstance;
 import com.imadelfetouh.authservice.factory.Factory;
 import com.imadelfetouh.authservice.logicinterface.SignInLogic;
 import com.imadelfetouh.authservice.model.response.ResponseModel;
+import com.imadelfetouh.authservice.model.response.ResponseType;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -18,14 +19,22 @@ public class SignInResource {
         this.signInLogic = (SignInLogic) Factory.getInstance().buildInstance(new CreateLogicLiveInstance());
     }
 
+    public SignInResource(SignInLogic signInLogic) {
+        this.signInLogic = signInLogic;
+    }
+
     @POST
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
     public Response signIn(@FormParam("username") String username, @FormParam("password") String password) {
 
-        ResponseModel<Boolean> responseModel = signInLogic.signIn(username, password);
+        ResponseModel<String> responseModel = signInLogic.signIn(username, password);
 
-        return Response.status(200).entity("Sign in endpoint").build();
+        if(responseModel.getResponseType().equals(ResponseType.ERROR)){
+            return Response.status(500).build();
+        }
+
+        return Response.status(200).entity(responseModel.getData()).build();
 
     }
 }

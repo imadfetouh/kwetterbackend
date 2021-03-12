@@ -4,5 +4,5 @@ import com.imadelfetouh.authservice.model.response.ResponseModel;
 
 public interface SignInDal {
 
-    ResponseModel<Boolean> signIn(String username, String password);
+    ResponseModel<Integer> signIn(String username, String password);
 }

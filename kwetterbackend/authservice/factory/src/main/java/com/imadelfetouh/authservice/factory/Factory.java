@@ -1,5 +1,7 @@
 package com.imadelfetouh.authservice.factory;
 
+import com.imadelfetouh.authservice.factory.logicinstance.CreateInstance;
+
 public class Factory {
 
     private static Factory factory = new Factory();

@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/authservice/dal/dal.iml" filepath="$PROJECT_DIR$/authservice/dal/dal.iml" />
       <module fileurl="file://$PROJECT_DIR$/authservice/dalinterface/dalinterface.iml" filepath="$PROJECT_DIR$/authservice/dalinterface/dalinterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/authservice/factory/factory.iml" filepath="$PROJECT_DIR$/authservice/factory/factory.iml" />
+      <module fileurl="file://$PROJECT_DIR$/jwtservice/jwtservice.iml" filepath="$PROJECT_DIR$/jwtservice/jwtservice.iml" />
       <module fileurl="file://$PROJECT_DIR$/authservice/logic/logic.iml" filepath="$PROJECT_DIR$/authservice/logic/logic.iml" />
       <module fileurl="file://$PROJECT_DIR$/authservice/logicinterface/logicinterface.iml" filepath="$PROJECT_DIR$/authservice/logicinterface/logicinterface.iml" />
       <module fileurl="file://$PROJECT_DIR$/authservice/model/model.iml" filepath="$PROJECT_DIR$/authservice/model/model.iml" />

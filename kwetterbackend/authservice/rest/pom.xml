@@ -67,6 +67,10 @@
                     <groupId>com.imadelfetouh.authservice</groupId>
                     <artifactId>dal</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.imadelfetouh.authservice</groupId>
+                    <artifactId>logic</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
     </dependencies>

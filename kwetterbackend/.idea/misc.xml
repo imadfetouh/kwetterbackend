@@ -9,6 +9,7 @@
         <option value="$PROJECT_DIR$/zuulproxyservice/pom.xml" />
         <option value="$PROJECT_DIR$/authservice/pom.xml" />
         <option value="$PROJECT_DIR$/authservice/rest/pom.xml" />
+        <option value="$PROJECT_DIR$/../../workshop-microservices/code/jwtservice/pom.xml" />
       </list>
     </option>
   </component>

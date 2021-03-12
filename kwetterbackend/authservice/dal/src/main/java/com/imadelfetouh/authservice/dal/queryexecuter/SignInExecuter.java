@@ -9,7 +9,7 @@ import org.hibernate.Session;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 
-public class SignInExecuter implements QueryExecuter<Boolean> {
+public class SignInExecuter implements QueryExecuter<Integer> {
 
     private String username;
     private String password;
@@ -20,16 +20,17 @@ public class SignInExecuter implements QueryExecuter<Boolean> {
     }
 
     @Override
-    public ResponseModel<Boolean> executeQuery(Session session) {
-        ResponseModel<Boolean> responseModel = new ResponseModel<>();
+    public ResponseModel<Integer> executeQuery(Session session) {
+        ResponseModel<Integer> responseModel = new ResponseModel<>();
 
         Query query = session.createQuery("SELECT u FROM User u WHERE u.username = :username AND u.password = :password");
         query.setParameter("username", this.username);
         query.setParameter("password", this.password);
 
         try {
-            query.getSingleResult();
-            responseModel.setData(true);
+            User user = (User) query.getSingleResult();
+            responseModel.setData(user.getId());
+            responseModel.setResponseType(ResponseType.CORRECT);
         }
         catch (NoResultException e){
             responseModel.setResponseType(ResponseType.WRONGCREDENTIALS);

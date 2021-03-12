@@ -7,14 +7,14 @@ import com.imadelfetouh.authservice.model.response.ResponseModel;
 
 public class SignInDalLive implements SignInDal {
 
-    private Executer<Boolean> executer;
+    private Executer<Integer> executer;
 
     public SignInDalLive() {
         executer = new Executer<>();
     }
 
     @Override
-    public ResponseModel<Boolean> signIn(String username, String password) {
+    public ResponseModel<Integer> signIn(String username, String password) {
         return executer.execute(new SignInExecuter(username, password));
     }
 }
