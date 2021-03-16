@@ -7,7 +7,7 @@ import java.security.Key;
 
 public class SecretKeyGenerator {
 
-    private static SecretKeyGenerator secretKeyGenerator = new SecretKeyGenerator();
+    private static final SecretKeyGenerator secretKeyGenerator = new SecretKeyGenerator();
     private Key key;
 
     public static SecretKeyGenerator getInstance(){

@@ -1,5 +1,4 @@
 module dal {
-    exports com.imadelfetouh.authservice.dal.signin;
     requires org.hibernate.orm.core;
     requires org.hibernate.commons.annotations;
     requires java.persistence;
@@ -7,4 +6,6 @@ module dal {
     requires java.sql;
     requires dalinterface;
     requires model;
+
+    exports com.imadelfetouh.authservice.dal.signin;
 }

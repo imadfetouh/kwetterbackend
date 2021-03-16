@@ -5,7 +5,7 @@ import com.rabbitmq.client.ConnectionFactory;
 public class RabbitConnection {
 
     private ConnectionFactory connectionFactory = new ConnectionFactory();
-    private final String queueName = "jwt_queue";
+    private static final String QUEUE_NAME = "jwt_queue";
 
     public RabbitConnection() {
         connectionFactory.setHost("localhost");
@@ -16,6 +16,6 @@ public class RabbitConnection {
     }
 
     public String getQueueName() {
-        return queueName;
+        return QUEUE_NAME;
     }
 }

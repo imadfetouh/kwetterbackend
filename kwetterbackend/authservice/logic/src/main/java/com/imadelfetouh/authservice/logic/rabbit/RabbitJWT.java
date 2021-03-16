@@ -8,61 +8,62 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class RabbitJWT extends RabbitConnection{
+public class RabbitJWT{
 
-    private final String routingKey = UUID.randomUUID().toString();
+    private static final Logger logger = Logger.getLogger(RabbitJWT.class.getName());
+    private final String corrId;
     private final Integer userId;
-    private final String exchange = "newtoken_exchange";
+    private final String requestQueueName;
+    private Connection connection;
 
     public RabbitJWT(Integer userId) {
-        super();
+        this.corrId = UUID.randomUUID().toString();
         this.userId = userId;
+        this.requestQueueName = "jwt_queue";
+        connection = RabbitConnection.getInstance().getConnection();
     }
 
     public String getToken() {
         String token = null;
-        try(Connection connection = connectionFactory.newConnection();
-            Channel channel = connection.createChannel()) {
+        try(Channel channel = connection.createChannel()) {
 
-            channel.exchangeDeclare(exchange, "direct");
-            channel.queueBind(queueName, exchange, routingKey);
+            String replyQueueName = channel.queueDeclare().getQueue();
+
+            AMQP.BasicProperties properties = new AMQP.BasicProperties()
+                    .builder()
+                    .correlationId(corrId)
+                    .replyTo(replyQueueName)
+                    .build();
 
             BlockingQueue<String> blockingQueue = new ArrayBlockingQueue<String>(1);
             Consumer consumer = new DefaultConsumer(channel) {
                 @Override
                 public void handleDelivery(String consumerTag, Envelope envelope, AMQP.BasicProperties properties, byte[] body) throws IOException {
-                    blockingQueue.offer(new String(body, "UTF-8"));
+                    if(properties.getCorrelationId().equals(corrId)){
+                        blockingQueue.offer(new String(body, "UTF-8"));
+                    }
                 }
             };
 
-            channel.basicConsume(queueName, true, consumer);
+            channel.basicConsume(replyQueueName, true, consumer);
 
-            sendMessage(channel);
+            channel.basicPublish("", requestQueueName, properties, userId.toString().getBytes());
 
             token = blockingQueue.poll(3000, TimeUnit.MILLISECONDS);
 
-        } catch (TimeoutException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        } catch (TimeoutException | IOException | InterruptedException e) {
+            logger.log(Level.ALL, e.getMessage());
+        } finally {
+            try {
+                connection.close();
+            } catch (IOException e) {
+                logger.log(Level.ALL, e.getMessage());
+            }
         }
 
         return token;
-    }
-
-    private void sendMessage(Channel channel) {
-        try {
-            AMQP.BasicProperties properties = new AMQP.BasicProperties()
-                    .builder()
-                    .replyTo(routingKey)
-                    .build();
-
-            channel.basicPublish(exchange, "", properties, userId.toString().getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

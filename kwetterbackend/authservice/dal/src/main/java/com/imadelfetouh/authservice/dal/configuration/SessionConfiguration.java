@@ -15,7 +15,7 @@ public class SessionConfiguration {
     }
 
     public static SessionConfiguration getInstance() {
-        return sessionConfiguration;
+        return (sessionConfiguration == null) ? new SessionConfiguration() : sessionConfiguration;
     }
 
     public Session getSession() {

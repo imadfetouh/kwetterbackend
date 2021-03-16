@@ -1,6 +1,5 @@
 package com.imadelfetouh.jwtservice;
 
-import com.google.gson.Gson;
 import com.imadelfetouh.jwtservice.jwt.CreateJWTToken;
 import com.imadelfetouh.jwtservice.rabbit.RabbitConnection;
 import com.rabbitmq.client.*;
@@ -11,21 +10,24 @@ import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 public class App {
-    private static final String exchange = "newtoken_exchange";
+
+    private static final Object monitor = new Object();
 
     public static void main(String[] args) {
 
-        Object monitor = new Object();
         RabbitConnection rabbitConnection = new RabbitConnection();
         ConnectionFactory connectionFactory = rabbitConnection.getConnectionFactory();
 
         try(Connection connection = connectionFactory.newConnection();
             Channel channel = connection.createChannel()) {
-
-            channel.exchangeDeclare(exchange, "direct");
-            channel.queueBind(rabbitConnection.getQueueName(), exchange, "");
+            channel.queueDeclare(rabbitConnection.getQueueName(), false, false, false, null);
 
             DeliverCallback deliverCallback = (s, delivery) -> {
+                AMQP.BasicProperties properties = new AMQP.BasicProperties()
+                        .builder()
+                        .correlationId(delivery.getProperties().getCorrelationId())
+                        .build();
+
                 String message = new String(delivery.getBody(), "UTF-8");
                 System.out.println("received id: " + message);
 
@@ -33,18 +35,12 @@ public class App {
                 claims.put("userId", message);
                 String token = CreateJWTToken.getInstance().create(claims);
 
-                sendJwt(channel, delivery.getProperties().getReplyTo(), token);
+                channel.basicPublish("", delivery.getProperties().getReplyTo(), properties, token.getBytes());
             };
 
             channel.basicConsume(rabbitConnection.getQueueName(), true, deliverCallback, s -> {});
 
-            synchronized (monitor) {
-                try {
-                    monitor.wait();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
+            startMonitor();
 
         } catch (TimeoutException e) {
             e.printStackTrace();
@@ -53,11 +49,17 @@ public class App {
         }
     }
 
-    private static void sendJwt(Channel channel, String routingkey, String token) {
-        try {
-            channel.basicPublish(exchange, routingkey, null, token.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+    private static void startMonitor() {
+        while(true) {
+            synchronized (monitor) {
+                try {
+                    monitor.wait();
+                    break;
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    break;
+                }
+            }
         }
     }
 }

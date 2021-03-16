@@ -8,8 +8,12 @@ import org.hibernate.Session;
 
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class SignInExecuter implements QueryExecuter<Integer> {
+
+    private static final Logger logger = Logger.getLogger(SignInExecuter.class.getName());
 
     private String username;
     private String password;
@@ -33,6 +37,7 @@ public class SignInExecuter implements QueryExecuter<Integer> {
             responseModel.setResponseType(ResponseType.CORRECT);
         }
         catch (NoResultException e){
+            logger.log(Level.ALL, e.getMessage());
             responseModel.setResponseType(ResponseType.WRONGCREDENTIALS);
         }
 

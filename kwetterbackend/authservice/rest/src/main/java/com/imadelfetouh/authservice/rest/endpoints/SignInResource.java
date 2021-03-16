@@ -1,6 +1,6 @@
 package com.imadelfetouh.authservice.rest.endpoints;
 
-import com.imadelfetouh.authservice.factory.logicinstance.CreateLogicLiveInstance;
+import com.imadelfetouh.authservice.factory.logicinstance.CreateSignInInstance;
 import com.imadelfetouh.authservice.factory.Factory;
 import com.imadelfetouh.authservice.logicinterface.SignInLogic;
 import com.imadelfetouh.authservice.model.response.ResponseModel;
@@ -16,11 +16,7 @@ public class SignInResource {
     private SignInLogic signInLogic;
 
     public SignInResource() {
-        this.signInLogic = (SignInLogic) Factory.getInstance().buildInstance(new CreateLogicLiveInstance());
-    }
-
-    public SignInResource(SignInLogic signInLogic) {
-        this.signInLogic = signInLogic;
+        this.signInLogic = (SignInLogic) Factory.getInstance().buildInstance(new CreateSignInInstance());
     }
 
     @POST
